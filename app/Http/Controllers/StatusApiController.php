@@ -171,69 +171,13 @@ class StatusApiController extends Controller
     }
 
     /**
-     * listStatus
-     *
-     * @param unknown $page
-     * @param unknown $limit
-     *
-     */
-    public function listStatus($page, $limit)
-    {
-        $page   = preg_replace ( '#[^0-9]#', '', $page );
-        $item   = preg_replace ( '#[^0-9]#', '', $limit );
-
-        if ( !empty($page) && !empty($item)) {
-
-            $offset = $page * $item - $item;
-
-            $count = $this->status->count();
-            $totalpage = 0;
-
-            if ($count % $item > 0){
-                $totalpage = floor($count / $item) +1;
-            }else {
-                $totalpage = $count / $item ;
-            }
-
-            $pagination = [
-                'TOTALPAGE'     => $totalpage ,
-                'TOTALRECORD'   => $count ,
-                'CURRENTPAGE'   => $page,
-                'SHOWITEM'      => $item
-            ];
-
-            $status = $this->status->skip($offset)
-                                    ->take($item)
-                                    ->orderBy('status_id', 'desc')
-                                    ->get();
-
-            if ($status && $page <= $totalpage) {
-                return response()->json([
-                    'STATUS'    =>  true ,
-                    'MESSAGE'   =>  'record found',
-                    'DATA'      =>  $status,
-                    'CODE'      => 200,
-                    'PAGINATION'=>  $pagination
-                ], 200);
-            }
-        }
-
-        return response()->json([
-            'STATUS'    => false ,
-            'MESSAGE'   => 'Not Found',
-            'CODE'      => 400
-        ], 200);
-    }
-
-
-    /**
      * search
      *
      * @param unknown $page
      * @param unknown $limit
      *
      */
-    public function search($page, $limit, $keySearch)
+    public function listAll($page, $limit, $keySearch)
     {
         $keySearch  = preg_replace ( '#[^0-9A-Za-z\s-_]#', '', $keySearch );
         $page       = preg_replace ( '#[^0-9]#', '', $page );
@@ -241,10 +185,17 @@ class StatusApiController extends Controller
 
         if (!empty($keySearch) && !empty($page) && !empty($page)) {
 
-            $offset     = $page * $item - $item;
+            $offset	= $page * $item - $item;
+            $count	= 0;
+            $status;
 
-            $count = $this->status->where ( 'status_title', 'like',  $keySearch . '%' )
-                ->orwhere('status_id', '=', $keySearch )->count();
+            if ($keySearch == "all") {
+            	$count = $this->status->count();
+            } else {
+            	$count = $this->status->where ( 'status_title', 'like',  $keySearch . '%' )
+            	->orwhere('status_id', '=', $keySearch )->count();
+            }
+           
             $totalpage = 0;
 
             if ($count % $item > 0 ){
@@ -256,15 +207,23 @@ class StatusApiController extends Controller
             $pagination = [
                 'TOTALPAGE'     => $totalpage ,
                 'TOTALRECORD'   => $count ,
-                'CURRENTPAGE'   => $page,
-                'SHOWITEM'      => $item
+                'CURRENTPAGE'   => (int)$page,
+                'SHOWITEM'      => (int)$item
             ];
 
-            $status = $this->status->where ( 'status_title', 'like',  $keySearch . '%' )
-                ->orwhere('status_id', '=', $keySearch )
-                ->skip($offset)->take($item)
-                ->orderBy('status_id', 'desc')
-                ->get();
+            if ($keySearch == "all") {
+            	$status = $this->status->skip($offset)
+	            	->take($item)
+	            	->orderBy('status_id', 'desc')
+	            	->get();
+            } else {
+            	$status = $this->status->where ( 'status_title', 'like',  '%'.$keySearch . '%' )
+	            	->orwhere('status_id', '=', $keySearch )
+	            	->skip($offset)->take($item)
+	            	->orderBy('status_id', 'desc')
+	            	->get();
+            }
+            
 
             if ($status && $page <= $totalpage)  {
                 return response()->json([

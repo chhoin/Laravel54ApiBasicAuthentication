@@ -47,37 +47,32 @@
                         <tbody>
                           <tr>
                             <td>GET</td>
-                            <td>http://happycambodia.com/api/status</td>
+                            <td>{{ URL::to('/api/status') }}</td>
                             <td>List all status</td>
                           </tr>
                           <tr>
                             <td>GET</td>
-                            <td>http://happycambodia.com/api/status/{id}</td>
+                            <td>{{ URL::to('/api/status/{id}') }}</td>
                             <td>View status</td>
                           </tr>
                           <tr>
                             <td>POST</td>
-                            <td>http://happycambodia.com/api/status</td>
+                            <td>{{ URL::to('/api/status') }}</td>
                             <td>insert status</td>
                           </tr>
                           <tr>
                             <td>PUT</td>
-                            <td>http://happycambodia.com/api/status</td>
+                            <td>{{ URL::to('/api/status') }}</td>
                             <td>Update status</td>
                           </tr>
                           <tr>
                             <td>DELETE</td>
-                            <td>http://happycambodia.com/api/status/{id}</td>
+                            <td>{{ URL::to('/api/status/{id}') }}</td>
                             <td>Delete status</td>
                           </tr>
                           <tr>
                             <td>GET</td>
-                            <td>http://happycambodia.com/api/status/page/{pageid}/item/{limit}</td>
-                            <td>List status with pagination</td>
-                          </tr>
-                          <tr>
-                            <td>GET</td>
-                            <td>http://happycambodia.com/api/status/page/{pageid}/item/{limit}/{key}</td>
+                            <td>{{ URL::to('/api/status/page/{pageid}/item/{limit}/{key}') }}</td>
                             <td>Search status with pagination</td>
                           </tr>
                         </tbody>
