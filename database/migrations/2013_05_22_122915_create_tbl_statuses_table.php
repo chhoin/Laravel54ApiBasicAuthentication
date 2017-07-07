@@ -18,7 +18,7 @@ class CreateTblStatusesTable extends Migration
             $table->string('status_title','255');
             $table->string('status_description','255')->nullable();
             $table->string('status','20')->default('1');//active = 1 delete = 0
-            $table->string('status_author','255'); //admin create this
+            $table->string('status_author','255')->default('ADMIN'); //admin create this
             $table->string('status_sort','255')->default('1');
             $table->timestamps();
         });
