@@ -162,6 +162,12 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+    	
+    	/*
+    	 * No 'Access-Control-Allow-Origin' header
+    	 */	
+    	Barryvdh\DomPDF\ServiceProvider::class,
+    	Barryvdh\Cors\ServiceProvider::class,
 
         /*
          * Package Service Providers...
