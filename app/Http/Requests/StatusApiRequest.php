@@ -24,8 +24,8 @@ class StatusApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'txtName'      => 'required|min:2|max:255',
-            'txtDescription'=> 'required'
+            'txtName'      => 'required|min:1|max:100',
+            'txtDescription'=> 'required|min:2|max:255'
         ];
     }
 }

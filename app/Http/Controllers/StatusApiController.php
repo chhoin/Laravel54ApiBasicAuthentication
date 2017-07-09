@@ -52,7 +52,7 @@ class StatusApiController extends Controller
         $this->status->status_description = $request->txtDescription;
         $this->status->status_author      = "Admin";
         $this->status->created_at         = $this->date;
-        $this->status->updated_at         = $this->date;
+        $this->status->updated_at         = null;
 
         $insert = $this->status->save();
         if($insert) {
