@@ -140,6 +140,42 @@ class StatusApiController extends Controller
             'CODE'      =>   400
         ], 200);
     }
+    
+    /**
+     * toggle
+     * @param Request $request
+     */
+    public function toggle(Request $request)
+    {
+    	$id = preg_replace ( '#[^0-9]#', '', $request->id );
+    
+    	if ( $id != "" && !empty($id)) {
+    
+    		$update = $this->status->where('status_id',$id)->first();
+    
+    		if($update) {
+    
+    			$this->status->where ('status_id', $id )->update ( [
+    					'status'                => $request->txtStatus,
+    					'status_author'         => 'Admin',
+    					'updated_at'            => $this->date
+    			] );
+    
+    			return response()->json([
+    					'STATUS'    =>  true,
+    					'MESSAGE'   =>  'Status was updated',
+    					'CODE'      =>  200
+    			], 200);
+    
+    		}
+    	}
+    
+    	return response()->json([
+    			'STATUS'    =>  false,
+    			'MESSAGE'   =>  'Status not found',
+    			'CODE'      =>   400
+    	], 200);
+    }
 
     /**
      * Remove the specified resource from storage.

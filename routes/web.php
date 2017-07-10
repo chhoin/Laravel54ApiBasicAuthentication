@@ -20,11 +20,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get ( '/main/status.html',   ['uses' => 'StatusMainController@index'  ]);
 
     //api URL
-    Route::get( '/api/status',          ['uses' => 'StatusApiController@index' ,'middleware'=>'apiauth' ]);
-    Route::get( '/api/status/{id}',     ['uses' => 'StatusApiController@show','middleware'=>'apiauth' ]);
-    Route::post( '/api/status',         ['uses' => 'StatusApiController@store','middleware'=>'apiauth' ]);
-    Route::put( '/api/status',          ['uses' => 'StatusApiController@update','middleware'=>'apiauth' ]);
-    Route::delete( '/api/status/{id}',  ['uses' => 'StatusApiController@destroy','middleware'=>'apiauth' ]);
-    Route::get( '/api/status/page/{pageid}/item/{limit}/{key}', ['uses' => 'StatusApiController@listAll','middleware'=> ['cors', 'apiauth'] ]);
+    Route::get( '/api/status',          ['uses' => 'StatusApiController@index' ,'middleware'=>'cors' ]);
+    Route::get( '/api/status/{id}',     ['uses' => 'StatusApiController@show','middleware'=>'cors' ]);
+    Route::post( '/api/status',         ['uses' => 'StatusApiController@store','middleware'=>'cors' ]);
+    Route::put( '/api/status',          ['uses' => 'StatusApiController@update','middleware'=>'cors' ]);
+    Route::put( '/api/status/toggle',   ['uses' => 'StatusApiController@toggle','middleware'=>'cors' ]);
+    Route::delete( '/api/status/{id}',  ['uses' => 'StatusApiController@destroy','middleware'=>'cors' ]);
+    Route::get( '/api/status/page/{pageid}/item/{limit}/{key}', ['uses' => 'StatusApiController@listAll','middleware'=> ['cors'] ]);
 
 });
